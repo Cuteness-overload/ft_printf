@@ -44,20 +44,21 @@ ARFLAGS = -rcs
 all	:	$(NAME)
 
 $(LFT_PATH)/$(LFT_NAME)	:
-			@$(MAKE) -j -C $(LFT_PATH)
+			cd libft && $(MAKE) && cd ..
 
 $(NAME)	:	$(LFT_PATH)/$(LFT_NAME) $(OFILES)
-			@cp $(LFT_PATH)/$(LFT_NAME) $(NAME)
-			@$(AR) $(ARFLAGS) $(NAME) $(OFILES)
+			cp $(LFT_PATH)/$(LFT_NAME) $(NAME)
+			$(AR) $(ARFLAGS) $(NAME) $(OFILES)
 
 bonus	:
 			@$(MAKE) -j DO_BONUS=1
 
 clean	:
+			cd libft && $(MAKE) clean && cd ..
 			@rm -f $(OFILES)
 
 fclean	: clean
-			@$(MAKE) -C $(LFT_PATH) fclean
+			cd libft && $(MAKE) fclean && cd ..
 			@rm -f $(NAME)
 
 re	:	fclean all

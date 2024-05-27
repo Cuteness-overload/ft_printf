@@ -6,7 +6,7 @@
 /*   By: ebesnoin <ebesnoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:54:37 by ebesnoin          #+#    #+#             */
-/*   Updated: 2024/04/19 16:06:32 by ebesnoin         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:00:45 by ebesnoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ void	ft_putnbr_fd(int n, int fd)
 	if (n == -2147483648)
 	{
 		write(fd, "-2147483648", 11);
+		return ;
 	}
-	else if (n < 0)
+	if (n < 0)
 	{
 		write(fd, "-", 1);
 		n *= -1;
 	}
-	else if (n > 9)
+	if (n > 9)
 		ft_putnbr_fd(n / 10, fd);
 	c = (n % 10) + '0';
 	write(fd, &c, 1);

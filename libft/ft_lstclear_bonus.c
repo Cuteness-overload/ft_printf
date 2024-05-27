@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebesnoin <ebesnoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 05:47:20 by ebesnoin          #+#    #+#             */
-/*   Updated: 2024/04/20 06:22:29 by ebesnoin         ###   ########.fr       */
+/*   Created: 2024/05/24 17:20:17 by ebesnoin          #+#    #+#             */
+/*   Updated: 2024/05/24 17:44:26 by ebesnoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*prev;
-	t_list	*curr;
+	t_list	*tmp;
 
-	curr = *lst;
-	while (curr->next != NULL)
+	while (lst && *lst)
 	{
-		prev = curr;
-		curr = curr->next;
-		del(prev->content);
-		free(prev);
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
 	}
-	del(curr->content);
-	free(curr);
-	*lst = NULL;
 }
