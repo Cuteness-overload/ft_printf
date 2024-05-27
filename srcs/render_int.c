@@ -6,15 +6,15 @@
 /*   By: ebesnoin <ebesnoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:00:57 by ebesnoin          #+#    #+#             */
-/*   Updated: 2024/05/21 10:45:13 by ebesnoin         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:03:10 by ebesnoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	itoa_base(t_data *data, long num)
+static void	itoa_base(t_data *data, unsigned long num)
 {
-	if (num >= data->format.base)
+	if (num >= (unsigned long)data->format.base)
 	{
 		itoa_base(data, num / data->format.base);
 		itoa_base(data, num % data->format.base);
@@ -75,14 +75,17 @@ static void	pad_spaces(t_data *data)
 
 static int	print_sign(t_data *data)
 {
-	if (data->format.field == 'p' || (data->format.field == 'x'
-			&& data->format.hash))
+	if ((data->format.field == 'p' || (data->format.field == 'x'
+				&& data->format.hash)) && data->format.tmp_buf[0] != '0')
 		data->err += putstr_buf(data, 2, "0x");
-	else if (data->format.field == 'X' && data->format.hash)
+	else if (data->format.field == 'X' && data->format.hash
+		&& data->format.tmp_buf[0] != '0')
 		data->err += putstr_buf(data, 2, "0X");
-	else if (data->format.field == 'b' && data->format.hash)
+	else if (data->format.field == 'b' && data->format.hash
+		&& data->format.tmp_buf[0] != '0')
 		data->err += putstr_buf(data, 2, "0b");
-	else if (data->format.field == 'o' && data->format.hash)
+	else if (data->format.field == 'o' && data->format.hash
+		&& data->format.tmp_buf[0] != '0')
 		data->err += putstr_buf(data, 1, "0");
 	else if (data->format.is_neg)
 		data->err += putstr_buf(data, 1, "-");
@@ -101,6 +104,7 @@ int	print_int(t_data *data, t_int ints)
 		ints.s = -ints.s;
 	}
 	itoa_base(data, ints.u);
+	check_nulls(data, ints);
 	pad_zeros(data);
 	pad_spaces(data);
 	if (data->format.l_align)

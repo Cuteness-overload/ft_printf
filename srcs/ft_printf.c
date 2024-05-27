@@ -6,7 +6,7 @@
 /*   By: ebesnoin <ebesnoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 19:43:29 by ebesnoin          #+#    #+#             */
-/*   Updated: 2024/04/28 01:48:06 by ebesnoin         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:16:10 by ebesnoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_printf(const char *str, ...)
 {
 	t_data	data;
 
+	if (str == 0)
+		return (0);
 	va_start(data.ap, str);
 	init_data(&data, str);
 	while (data.s[data.idx])

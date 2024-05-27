@@ -7,29 +7,21 @@ SRCS =	ft_printf.c \
 		render_int.c \
 		utils.c \
 		str_utils.c \
+		int_utils.c
 
 HFILES = ft_printf.h
-
-B_SRCS = ./
 
 SDIR = ./srcs/
 IDIR = ./includes/
 
-SFILES = $(addprefix $(SDIR), $(SRCS))
+SFILES = $(addprefix $(SDIR),$(SRCS))
 OFILES = $(SFILES:.c=.o)
-
-BSFILES = $(addprefix $(SDIR), $(B_SRCS))
-BOFILES = $(BSFILES:.c=.o)
 
 LFT_NAME = libft.a
 LFT_PATH = ./libft
 
-ifdef DO_BONUS
-	OFILES += $(BOFILES)
-endif
-
 CC = cc
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS += -Wall -Wextra -Werror -fPIE
 #CFLAGS +=    -g3
 #CFLAGS +=    -fsanitize=address
 #CFLAGS +=    -arch x86_64
@@ -44,14 +36,13 @@ ARFLAGS = -rcs
 all	:	$(NAME)
 
 $(LFT_PATH)/$(LFT_NAME)	:
-			cd libft && $(MAKE) && cd ..
+			cd libft && $(MAKE) all && cd ..
 
 $(NAME)	:	$(LFT_PATH)/$(LFT_NAME) $(OFILES)
 			cp $(LFT_PATH)/$(LFT_NAME) $(NAME)
 			$(AR) $(ARFLAGS) $(NAME) $(OFILES)
 
-bonus	:
-			@$(MAKE) -j DO_BONUS=1
+bonus	: all
 
 clean	:
 			cd libft && $(MAKE) clean && cd ..

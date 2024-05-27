@@ -6,7 +6,7 @@
 /*   By: ebesnoin <ebesnoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:44:49 by ebesnoin          #+#    #+#             */
-/*   Updated: 2024/04/25 22:42:23 by ebesnoin         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:57:50 by ebesnoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ enum e_error
 	WRITE_ERROR = -3,
 };
 
-typedef union u_int
+typedef union u_ints
 {
 	long			s;
 	unsigned long	u;
@@ -93,8 +93,11 @@ int		get_len(t_data *data, char *str);
 int		print_char(t_data *data, char c);
 int		print_str(t_data *data, char *str);
 int		print_int(t_data *data, t_int ints);
+void	check_nulls(t_data *data, t_int ints);
 
 int		parser(t_data *data);
 int		render(t_data *data);
+
+int		ft_printf(const char *str, ...);
 
 #endif
